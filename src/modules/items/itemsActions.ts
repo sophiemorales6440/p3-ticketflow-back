@@ -1,11 +1,10 @@
 import type { RequestHandler } from "express";
-import type { ResultSetHeader, RowDataPacket } from "mysql2";
-import client from "../../database/client.js";
+import * as itemsRepository from "./itemsRepository.js";
 
 // GET /api/items
 export const getAll: RequestHandler = async (_req, res, next) => {
 	try {
-		const [rows] = await client.query<RowDataPacket[]>("SELECT * FROM items");
+		const rows = await itemsRepository.findAll();
 		res.json(rows);
 	} catch (err) {
 		next(err);
@@ -15,17 +14,14 @@ export const getAll: RequestHandler = async (_req, res, next) => {
 // GET /api/items/:id
 export const getById: RequestHandler = async (req, res, next) => {
 	try {
-		const [rows] = await client.query<RowDataPacket[]>(
-			"SELECT * FROM items WHERE id = ?",
-			[req.params.id],
-		);
+		const item = await itemsRepository.findById(String(req.params.id));
 
-		if (rows.length === 0) {
+		if (!item) {
 			res.sendStatus(404);
 			return;
 		}
 
-		res.json(rows[0]);
+		res.json(item);
 	} catch (err) {
 		next(err);
 	}
@@ -35,13 +31,8 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
 	try {
 		const { title } = req.body;
-
-		const [result] = await client.query<ResultSetHeader>(
-			"INSERT INTO items (title) VALUES (?)",
-			[title],
-		);
-
-		res.status(201).json({ id: result.insertId, title });
+		const insertId = await itemsRepository.create(title);
+		res.status(201).json({ id: insertId, title });
 	} catch (err) {
 		next(err);
 	}
@@ -51,13 +42,9 @@ export const create: RequestHandler = async (req, res, next) => {
 export const update: RequestHandler = async (req, res, next) => {
 	try {
 		const { title } = req.body;
+		const updated = await itemsRepository.update(String(req.params.id), title);
 
-		const [result] = await client.query<ResultSetHeader>(
-			"UPDATE items SET title = ? WHERE id = ?",
-			[title, req.params.id],
-		);
-
-		if (result.affectedRows === 0) {
+		if (!updated) {
 			res.sendStatus(404);
 			return;
 		}
@@ -71,12 +58,9 @@ export const update: RequestHandler = async (req, res, next) => {
 // DELETE /api/items/:id
 export const destroy: RequestHandler = async (req, res, next) => {
 	try {
-		const [result] = await client.query<ResultSetHeader>(
-			"DELETE FROM items WHERE id = ?",
-			[req.params.id],
-		);
+		const deleted = await itemsRepository.destroy(String(req.params.id));
 
-		if (result.affectedRows === 0) {
+		if (!deleted) {
 			res.sendStatus(404);
 			return;
 		}
