@@ -38,17 +38,30 @@ export const create = async (
 	return result.insertId;
 };
 
-export const update = async (id: string, title: string,description: string,
-    status: string,
-    priority: string,
-    client_id: number | null,
-    technician_id: number | null,
-    category_id: number | null, ) => {
-    const [result] = await client.query<ResultSetHeader>(
-        "UPDATE tickets SET title = ?, description = ?, status = ?, priority = ?, client_id = ?, technician_id = ?, category_id = ? WHERE id = ?",
-        [title, description, status, priority, client_id, technician_id, category_id, id],
-    );
-    return result.affectedRows > 0;
+export const update = async (
+	id: string,
+	title: string,
+	description: string,
+	status: string,
+	priority: string,
+	client_id: number | null,
+	technician_id: number | null,
+	category_id: number | null,
+) => {
+	const [result] = await client.query<ResultSetHeader>(
+		"UPDATE tickets SET title = ?, description = ?, status = ?, priority = ?, client_id = ?, technician_id = ?, category_id = ? WHERE id = ?",
+		[
+			title,
+			description,
+			status,
+			priority,
+			client_id,
+			technician_id,
+			category_id,
+			id,
+		],
+	);
+	return result.affectedRows > 0;
 };
 
 export const destroy = async (id: string) => {
