@@ -19,6 +19,22 @@ CREATE TABLE categories (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE tickets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    description TEXT,
+    status ENUM('open', 'in_progress', 'resolved', 'closed') NOT NULL DEFAULT 'open',
+    priority ENUM('low', 'medium', 'high', 'critical') NOT NULL DEFAULT 'medium',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    resolved_at DATETIME DEFAULT NULL,
+    client_id INT NOT NULL,
+    technician_id INT DEFAULT NULL,
+    category_id INT DEFAULT NULL,
+    FOREIGN KEY (client_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (technician_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+);
+
 CREATE TABLE attachments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     url VARCHAR(255) NOT NULL,
@@ -48,20 +64,4 @@ CREATE TABLE ticket_history (
     changed_by INT NOT NULL,
     FOREIGN KEY (ticket_id) REFERENCES tickets(id) ON DELETE CASCADE,
     FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE tickets (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(150) NOT NULL,
-    description TEXT,
-    status ENUM('open', 'in_progress', 'resolved', 'closed') NOT NULL DEFAULT 'open',
-    priority ENUM('low', 'medium', 'high', 'critical') NOT NULL DEFAULT 'medium',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    resolved_at DATETIME DEFAULT NULL,
-    client_id INT NOT NULL,
-    technician_id INT DEFAULT NULL,
-    category_id INT DEFAULT NULL,
-    FOREIGN KEY (client_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (technician_id) REFERENCES users(id) ON DELETE SET NULL,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
 );
