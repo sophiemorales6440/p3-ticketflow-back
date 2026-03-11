@@ -1,3 +1,17 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE attachments;
+TRUNCATE TABLE tickets;
+TRUNCATE TABLE categories;
+TRUNCATE TABLE users;
+TRUNCATE TABLE items;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+------------------------------------------------------------
+-- 0) ITEMS (données dev)
+------------------------------------------------------------
+
 INSERT INTO items (title) VALUES
   ('Premier item'),
   ('Deuxième item'),
