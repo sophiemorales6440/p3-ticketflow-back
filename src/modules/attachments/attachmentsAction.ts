@@ -1,0 +1,56 @@
+import type { Request, Response } from "express";
+import attachmentsRepository from "./attachmentsRepository.js";
+
+const create = async (req: Request, res: Response) => {
+	try {
+		const ticketId = Number(req.params.id);
+		const { url, filename } = req.body;
+
+		if (!url || !filename) {
+			return res.status(400).json({ error: "Missing url or filename" });
+		}
+
+		const id = await attachmentsRepository.create(url, filename, ticketId);
+
+		return res.status(201).json({ id, url, filename, ticketId });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+};
+
+const findByTicketId = async (req: Request, res: Response) => {
+	try {
+		const ticketId = Number(req.params.id);
+
+		const attachments = await attachmentsRepository.findByTicketId(ticketId);
+
+		return res.status(200).json(attachments);
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+};
+
+const destroy = async (req: Request, res: Response) => {
+	try {
+		const id = Number(req.params.id);
+
+		const deleted = await attachmentsRepository.destroy(id);
+
+		if (!deleted) {
+			return res.status(404).json({ error: "Attachment not found" });
+		}
+
+		return res.status(200).json({ message: "Attachment deleted" });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+};
+
+export default {
+	create,
+	findByTicketId,
+	destroy,
+};
