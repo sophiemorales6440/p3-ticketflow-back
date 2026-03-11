@@ -5,7 +5,6 @@ INSERT INTO items (title) VALUES
   ('Troisième item');
 
 -- data fictive pour dev à mettre dans les tables
-<<<<<<< DB_users_Victor
 INSERT INTO users (firstname, lastname, email, password)
 VALUES 
 ('Tom', 'Doe', 'Tom@example.com', 'azerty'),
@@ -13,7 +12,7 @@ VALUES
 ('James', 'Cook', 'james@example.com', 'motdepasse'),
 ('Victor', 'Doer', 'victor@example.com', 'gitgud'),
 ('John', 'Battlefield', 'John@example.com', 'getrekt');
-=======
+
 USE ticketflow;
 -- Users fictifs
 INSERT IGNORE INTO users (firstname, lastname, email, password, role) VALUES
@@ -33,4 +32,3 @@ INSERT IGNORE INTO tickets (title, description, status, priority, client_id, tec
 ('Mon écran ne fonctionne plus', 'Ecran noir au démarrage', 'open', 'high', 3, 2, 1),
 ('Problème de connexion VPN', 'Impossible de se connecter au VPN', 'open', 'medium', 3, NULL, 3),
 ('Logiciel qui plante', 'Excel crash au démarrage', 'in_progress', 'low', 3, 2, 2);
->>>>>>> dev
