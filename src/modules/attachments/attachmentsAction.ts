@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import { findById } from "../tickets/ticketsRepository.js";
 import attachmentsRepository from "./attachmentsRepository.js";
 
 const create = async (req: Request, res: Response) => {
@@ -8,6 +9,12 @@ const create = async (req: Request, res: Response) => {
 
 		if (!url || !filename) {
 			return res.status(400).json({ error: "Missing url or filename" });
+		}
+
+		// Vérification : le ticket existe (findById attend un string)
+		const ticket = await findById(String(ticketId));
+		if (!ticket) {
+			return res.status(404).json({ error: "Ticket not found" });
 		}
 
 		const id = await attachmentsRepository.create(url, filename, ticketId);
