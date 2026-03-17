@@ -1,7 +1,6 @@
 import { Router } from "express";
-import authRoutes from "./modules/auth/authRoutes.js";
-
 import attachmentsRoutes from "./modules/attachments/attachmentsRoutes.js";
+import authRoutes from "./modules/auth/authRoutes.js";
 import categoriesRoutes from "./modules/category/categoryRoutes.js";
 import commentsRoutes from "./modules/comments/commentsRoutes.js";
 import itemsRoutes from "./modules/items/itemsRoutes.js";
