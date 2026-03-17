@@ -34,7 +34,7 @@ INSERT IGNORE INTO tickets (title, description, status, priority, client_id, tec
 ('Problème de connexion VPN', 'Impossible de se connecter au VPN', 'open', 'medium', 3, NULL, 3),
 ('Logiciel qui plante', 'Excel crash au démarrage', 'in_progress', 'low', 3, 2, 2);
 
-INSERT INTO comments (content, author_id, ticket_id) VALUES
+INSERT INTO comments (content, author_id, ticket_id,) VALUES
 ('premier commentaire', 1, 1),
 ('deuxiéme commentaire', 2, 1),
 ('troisiéme commentaire', 1, 2);
