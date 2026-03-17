@@ -46,3 +46,9 @@ INSERT IGNORE INTO tickets (title, description, status, priority, client_id, tec
 ('Mon écran ne fonctionne plus', 'Ecran noir au démarrage', 'open', 'high', 3, 2, 1),
 ('Problème de connexion VPN', 'Impossible de se connecter au VPN', 'open', 'medium', 3, NULL, 3),
 ('Logiciel qui plante', 'Excel crash au démarrage', 'in_progress', 'low', 3, 2, 2);
+
+-- Attachments fictifs
+INSERT IGNORE INTO attachments (url, filename, ticket_id) VALUES
+('https://cdn.example.com/screenshot1.png', 'screenshot1.png', 1),
+('https://cdn.example.com/logs.txt', 'logs.txt', 1),
+('https://cdn.example.com/capture.png', 'capture.png', 2);
