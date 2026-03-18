@@ -1,27 +1,23 @@
 import type { RequestHandler } from "express";
 import * as authRepository from "./authRepository.js";
+import bcrypt from "bcrypt";
 
 export const signin: RequestHandler = async (request, response, next) => {
-	const { email, password } = request.body;
-	try {
-		const isAuth = await authRepository.signin(String(email), String(password));
-		if (!isAuth) {
-			response.sendStatus(401);
-			return;
-		}
-
-		response.json(isAuth);
-	} catch (error) {
-		next(error);
-	}
+	const {user} = request.body;
+	response.json(user)
+	
 };
 
 export const signup: RequestHandler = async (request, response, next) => {
 	try {
 		const { email, password } = request.body;
+
+		const salt = bcrypt.genSaltSync(8)
+		const passwordHash = bcrypt.hashSync(password, salt)
+
 		const insertId = await authRepository.signup(
 			String(email),
-			String(password),
+			passwordHash,
 		);
 		response.status(201).json({ id: insertId, email });
 	} catch (err) {
