@@ -21,7 +21,7 @@ export const emailExist = async (email: string) => {
 	const [rows] = await client.query<RowDataPacket[]>(
 		"SELECT * from users WHERE email = ?",
 		[email],
-	)
+	);
 
 	return rows[0] as RowDataPacket | undefined;
-}
+};

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { signin, signup } from "./authActions.js";
 import { checkEmail } from "../../middleware/authMiddleware.js";
+import { signin, signup } from "./authActions.js";
 
 const router = Router();
 
