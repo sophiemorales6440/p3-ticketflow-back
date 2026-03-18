@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
+import type { RequestHandler } from "express";
 import * as authRepository from "../modules/auth/authRepository.js";
 
-export const checkEmail = async (request, response, next) => {
+export const checkEmail: RequestHandler = async (request, response, next) => {
 	const { email, password } = request.body;
 
 	const isExist = await authRepository.emailExist(email);
@@ -20,7 +21,7 @@ export const checkEmail = async (request, response, next) => {
 	next();
 };
 
-export const isAdmin = async (request, response, next) => {
+export const isAdmin: RequestHandler = async (_request, response, next) => {
 	const isExist = true;
 
 	if (!isExist) {

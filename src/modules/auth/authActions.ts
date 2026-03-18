@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import type { RequestHandler } from "express";
 import * as authRepository from "./authRepository.js";
 
-export const signin: RequestHandler = async (request, response, next) => {
+export const signin: RequestHandler = async (request, response, _next) => {
 	const { user } = request.body;
 	response.json(user);
 };
