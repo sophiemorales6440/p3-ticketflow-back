@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import type { RequestHandler } from "express";
 import * as authRepository from "./authRepository.js";
 
