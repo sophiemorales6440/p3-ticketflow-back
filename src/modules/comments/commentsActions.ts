@@ -31,7 +31,13 @@ export const create: RequestHandler = async (req, res, next) => {
 			author_id,
 			ticket_id,
 		);
-		res.status(201).json({ id: insertId, content, author_id, ticket_id });
+		res.status(201).json({
+			id: insertId,
+			content,
+			author_id,
+			ticket_id,
+			created_at: new Date().toISOString(),
+		});
 	} catch (err) {
 		next(err);
 	}
