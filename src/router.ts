@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { checkEmail } from "./middleware/authMiddleware.js";
 import attachmentsRoutes from "./modules/attachments/attachmentsRoutes.js";
 import authRoutes from "./modules/auth/authRoutes.js";
 import categoriesRoutes from "./modules/category/categoryRoutes.js";
@@ -9,7 +10,7 @@ import usersRoutes from "./modules/users/usersRoutes.js";
 
 const router = Router();
 
-router.use("/api/auth", authRoutes);
+router.use("/api/auth", checkEmail, authRoutes);
 
 router.use("/api/items", itemsRoutes);
 router.use("/api/users", usersRoutes);
