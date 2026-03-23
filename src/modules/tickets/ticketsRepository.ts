@@ -2,7 +2,9 @@ import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import client from "../../database/client.js";
 
 export const findAll = async () => {
-	const [rows] = await client.query<RowDataPacket[]>("SELECT tickets.*, categories.name AS category_name FROM tickets LEFT JOIN categories ON tickets.category_id = categories.id");
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT tickets.*, categories.name AS category_name FROM tickets LEFT JOIN categories ON tickets.category_id = categories.id",
+	);
 	return rows;
 };
 
