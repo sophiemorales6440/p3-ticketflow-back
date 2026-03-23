@@ -71,3 +71,10 @@ export const destroy = async (id: string) => {
 	);
 	return result.affectedRows > 0;
 };
+export const findAttachmentsByTicketId = async (ticketId: string) => {
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT * FROM attachments WHERE ticket_id = ?",
+		[ticketId],
+	);
+	return rows;
+};
