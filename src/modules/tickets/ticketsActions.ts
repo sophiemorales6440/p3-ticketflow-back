@@ -112,3 +112,28 @@ export const destroy: RequestHandler = async (req, res, next) => {
 		next(err);
 	}
 };
+// GET /api/tickets/:id/attachments
+export const getAttachmentsByTicketId: RequestHandler = async (
+	req,
+	res,
+	next,
+) => {
+	try {
+		const ticketId = String(req.params.id);
+
+		// Vérifier que le ticket existe
+		const ticket = await ticketsRepository.findById(ticketId);
+		if (!ticket) {
+			res.status(404).json({ message: "Ticket introuvable" });
+			return;
+		}
+
+		// Récupérer les attachments
+		const attachments =
+			await ticketsRepository.findAttachmentsByTicketId(ticketId);
+
+		res.json(attachments);
+	} catch (err) {
+		next(err);
+	}
+};
