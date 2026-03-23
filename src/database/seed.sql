@@ -15,13 +15,13 @@ INSERT INTO items (title) VALUES
   ('test item test'),
   ('Troisième item');
 
-INSERT INTO users (firstname, lastname, email, password)
+INSERT INTO users (firstname, lastname, role, email, password)
 VALUES 
-('Tom', 'Doe', 'Tom@example.com', 'azerty'),
-('Marie', 'Dupont', 'marie@example.com', '123456789'),
-('James', 'Cook', 'james@example.com', 'motdepasse'),
-('Victor', 'Doer', 'victor@example.com', 'gitgud'),
-('John', 'Battlefield', 'John@example.com', 'getrekt');
+('Sophie', 'Doe', 'admin', 'sophie@example.com', '$2a$08$lSRA0Wc.5QcIzgvLrUhcneV0SPBLSFLkVesBQtAzF3vME8sscgOyW'), -- azerty
+('Marine', 'Dupont', 'admin', 'marine@example.com', '$2a$08$m73cbtW68CXw8EGSuvswgeF.uLdtrrtdKrFky9bWZNPrXT6bDkIhG'), -- 123456789
+('Kuider', 'Cook', 'technician', 'kuider@example.com', '$2a$08$BHeiWN3hWXQRonI30NECOOkqSkf3gMohU7UkZlHcS2W1I5dDePOo.'), -- motdepasse
+('Karim', 'Doer', 'technician', 'karim@example.com', '$2a$08$j2sYeM4lCOTe7c8b7jik4eblmt.mfF/1lXsC2UCPAOW0PNLvIgp12'), -- gitgud
+('Victor', 'Battlefield', 'client', 'victor@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- getrekt
 
 INSERT IGNORE INTO categories (name) VALUES
 ('Matériel'),
@@ -39,7 +39,8 @@ INSERT IGNORE INTO attachments (url, filename, ticket_id) VALUES
 ('https://cdn.example.com/screenshot1.png', 'screenshot1.png', 1),
 ('https://cdn.example.com/logs.txt', 'logs.txt', 1),
 ('https://cdn.example.com/capture.png', 'capture.png', 2);
-INSERT INTO comments (content, author_id, ticket_id,) VALUES
+
+INSERT INTO comments (content, author_id, ticket_id) VALUES
 ('premier commentaire', 1, 1),
 ('deuxiéme commentaire', 2, 1),
 ('troisiéme commentaire', 1, 2);
