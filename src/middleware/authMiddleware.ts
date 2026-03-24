@@ -45,8 +45,8 @@ export const checkToken: RequestHandler = async (request, response, next) => {
 	});
 };
 
-export const isAdmin: RequestHandler = async (_request, response, next) => {
-	const isExist = _request.body.role === "admin";
+export const isAdmin: RequestHandler = async (request, response, next) => {
+	const isExist = request.body.userRole === "admin";
 
 	if (!isExist) {
 		response.sendStatus(401);
