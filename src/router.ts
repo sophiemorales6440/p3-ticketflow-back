@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { checkToken } from "./middleware/authMiddleware.js";
 import attachmentsRoutes from "./modules/attachments/attachmentsRoutes.js";
 import authRoutes from "./modules/auth/authRoutes.js";
 import categoriesRoutes from "./modules/category/categoryRoutes.js";
@@ -11,11 +12,11 @@ const router = Router();
 
 router.use("/api/auth", authRoutes);
 
-router.use("/api/items", itemsRoutes);
-router.use("/api/users", usersRoutes);
-router.use("/api/tickets", ticketsRoutes);
-router.use("/api/categories", categoriesRoutes);
-router.use("/api/comments", commentsRoutes);
-router.use("/api/attachments", attachmentsRoutes);
+router.use("/api/items", checkToken, itemsRoutes);
+router.use("/api/users", checkToken, usersRoutes);
+router.use("/api/tickets", checkToken, ticketsRoutes);
+router.use("/api/categories", checkToken, categoriesRoutes);
+router.use("/api/comments", checkToken, commentsRoutes);
+router.use("/api/attachments", checkToken, attachmentsRoutes);
 
 export default router;
