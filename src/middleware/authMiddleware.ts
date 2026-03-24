@@ -35,7 +35,7 @@ export const checkToken: RequestHandler = async (request, response, next) => {
 	if (!secret) throw new Error("SECRET manquant");
 
 	// token verification
-	jwt.verify(token, process.env.SECRET, (error, decoded) => {
+	jwt.verify(token, secret, (error, decoded) => {
 		if (error) {
 			throw new Error("Problem token");
 		}
