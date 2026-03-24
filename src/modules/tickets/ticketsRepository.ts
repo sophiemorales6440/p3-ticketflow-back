@@ -2,13 +2,15 @@ import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import client from "../../database/client.js";
 
 export const findAll = async () => {
-	const [rows] = await client.query<RowDataPacket[]>("SELECT * FROM tickets");
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT tickets.*, categories.name AS category_name FROM tickets LEFT JOIN categories ON tickets.category_id = categories.id",
+	);
 	return rows;
 };
 
 export const findById = async (id: string) => {
 	const [rows] = await client.query<RowDataPacket[]>(
-		"SELECT * FROM tickets WHERE id = ?",
+		"SELECT tickets.*, categories.name AS category_name FROM tickets LEFT JOIN categories ON tickets.category_id = categories.id WHERE tickets.id = ?",
 		[id],
 	);
 	return rows[0] as RowDataPacket | undefined;
