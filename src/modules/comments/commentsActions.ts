@@ -37,6 +37,10 @@ export const findByTicketId: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
 	try {
 		const { content, author_id, ticket_id } = req.body;
+		if (!content || !content.trim()) {
+			res.sendStatus(400);
+			return;
+		}
 		const insertId = await commentsRepository.create(
 			content,
 			author_id,
@@ -57,6 +61,10 @@ export const create: RequestHandler = async (req, res, next) => {
 export const update: RequestHandler = async (req, res, next) => {
 	try {
 		const { content } = req.body;
+		if (!content || !content.trim()) {
+			res.sendStatus(400);
+			return;
+		}
 		const updated = await commentsRepository.update(
 			String(req.params.id),
 			content,
