@@ -11,6 +11,9 @@ export const checkEmail: RequestHandler = async (request, response, next) => {
 		return;
 	}
 
+	console.log("password reçu:", password);
+	console.log("hash en DB:", isExist.password);
+
 	const passwordValid = bcrypt.compareSync(password, isExist.password);
 	if (!passwordValid) {
 		response.status(401).send({ message: "Mauvais identifiants" });
@@ -22,7 +25,7 @@ export const checkEmail: RequestHandler = async (request, response, next) => {
 };
 
 export const isAdmin: RequestHandler = async (_request, response, next) => {
-	const isExist = true;
+	const isExist = _request.body.role === "admin";
 
 	if (!isExist) {
 		response.sendStatus(401);

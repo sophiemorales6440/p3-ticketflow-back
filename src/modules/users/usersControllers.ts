@@ -32,9 +32,7 @@ export const create: RequestHandler = async (request, respond, next) => {
 			email,
 			password,
 		);
-		respond
-			.status(201)
-			.json({ id: insertId, firstname, lastname, email, password });
+		respond.status(201).json({ id: insertId, firstname, lastname, email });
 	} catch (error) {
 		next(error);
 	}

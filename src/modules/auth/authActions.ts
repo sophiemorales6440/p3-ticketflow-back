@@ -3,8 +3,7 @@ import type { RequestHandler } from "express";
 import * as authRepository from "./authRepository.js";
 
 export const signin: RequestHandler = async (request, response, _next) => {
-	const { user } = request.body;
-	response.json(user);
+	response.json(request.body);
 };
 
 export const signup: RequestHandler = async (request, response, next) => {
