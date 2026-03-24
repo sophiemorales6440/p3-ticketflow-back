@@ -1,4 +1,4 @@
-import { checkToken } from "../middleware/authMiddleware";
+import { checkToken } from "../middleware/authMiddleware.js";
 
 describe("checkToken", () => {
 	it("retourner 401 si pas de header Authorization", async () => {
