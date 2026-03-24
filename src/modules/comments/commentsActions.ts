@@ -23,6 +23,17 @@ export const getById: RequestHandler = async (req, res, next) => {
 	}
 };
 
+export const findByTicketId: RequestHandler = async (req, res, next) => {
+	try {
+		const rows = await commentsRepository.findByTicketId(
+			String(req.params.ticketId),
+		);
+		res.json(rows);
+	} catch (err) {
+		next(err);
+	}
+};
+
 export const create: RequestHandler = async (req, res, next) => {
 	try {
 		const { content, author_id, ticket_id } = req.body;
