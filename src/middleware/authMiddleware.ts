@@ -37,7 +37,8 @@ export const checkToken: RequestHandler = async (request, response, next) => {
 	// token verification
 	jwt.verify(token, secret, (error, decoded) => {
 		if (error) {
-			throw new Error("Problem token");
+			response.sendStatus(401);
+			return;
 		}
 
 		const { id, role } = decoded as { id: number; role: string };
