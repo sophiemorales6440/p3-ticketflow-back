@@ -11,7 +11,7 @@ export const signin: RequestHandler = async (request, response, _next) => {
 	const secret = process.env.SECRET;
 	if (!secret) throw new Error("SECRET manquant");
 
-	const token = jwt.sign({ id, role }, secret, { expiresIn: "1h" });
+	const token = jwt.sign({ id, role }, secret, { expiresIn: "2h" });
 
 	response.status(200).json({ userDTO, token });
 };
