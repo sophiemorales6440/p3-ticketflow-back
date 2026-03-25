@@ -18,19 +18,19 @@ export const create: RequestHandler = async (req, res, next) => {
 	try {
 		const { old_status, new_status } = req.body;
 		const ticketId = Number(req.params.ticketId);
-		const changed_at = new Date();
+		const changed_by = new Date();
 		const insertId = await ticketHistoryRepository.create(
 			ticketId,
 			old_status,
 			new_status,
-			changed_at,
+			changed_by,
 		);
 		res.status(201).json({
 			id: insertId,
 			ticket_id: ticketId,
 			old_status,
 			new_status,
-			changed_at,
+			changed_by,
 		});
 	} catch (err) {
 		next(err);

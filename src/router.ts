@@ -5,12 +5,14 @@ import authRoutes from "./modules/auth/authRoutes.js";
 import categoriesRoutes from "./modules/category/categoryRoutes.js";
 import commentsRoutes from "./modules/comments/commentsRoutes.js";
 import itemsRoutes from "./modules/items/itemsRoutes.js";
+import ticketHistoryRoutes from "./modules/ticketHistory/ticketHistoryRoutes.js";
 import ticketsRoutes from "./modules/tickets/ticketsRoutes.js";
 import usersRoutes from "./modules/users/usersRoutes.js";
 
 const router = Router();
 
 router.use("/api/auth", authRoutes);
+router.use("/api/ticket-history", checkToken, ticketHistoryRoutes);
 
 router.use("/api/items", checkToken, itemsRoutes);
 router.use("/api/users", checkToken, usersRoutes);
