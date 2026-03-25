@@ -23,13 +23,29 @@ export const getById: RequestHandler = async (req, res, next) => {
 	}
 };
 
+export const findByTicketId: RequestHandler = async (req, res, next) => {
+	try {
+		const rows = await commentsRepository.findByTicketId(
+			String(req.params.ticketId),
+		);
+		res.json(rows);
+	} catch (err) {
+		next(err);
+	}
+};
+
 export const create: RequestHandler = async (req, res, next) => {
 	try {
-		const { content, author_id, ticket_id } = req.body;
+		const { content, author_id, ticket_id, is_internal } = req.body;
+		if (!content || !content.trim()) {
+			res.sendStatus(400);
+			return;
+		}
 		const insertId = await commentsRepository.create(
 			content,
 			author_id,
 			ticket_id,
+			is_internal ?? false,
 		);
 		res.status(201).json({
 			id: insertId,
@@ -46,6 +62,10 @@ export const create: RequestHandler = async (req, res, next) => {
 export const update: RequestHandler = async (req, res, next) => {
 	try {
 		const { content } = req.body;
+		if (!content || !content.trim()) {
+			res.sendStatus(400);
+			return;
+		}
 		const updated = await commentsRepository.update(
 			String(req.params.id),
 			content,

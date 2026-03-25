@@ -18,12 +18,21 @@ export const create = async (
 	content: string,
 	author_id: number,
 	ticket_id: number,
+	is_internal: boolean,
 ) => {
 	const [result] = await client.query<ResultSetHeader>(
-		"INSERT INTO comments (content, author_id, ticket_id) VALUES (?, ?, ?)",
-		[content, author_id, ticket_id],
+		"INSERT INTO comments (content, author_id, ticket_id, is_internal) VALUES (?, ?, ?, ?)",
+		[content, author_id, ticket_id, is_internal],
 	);
 	return result.insertId;
+};
+
+export const findByTicketId = async (ticketId: string) => {
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT * FROM comments WHERE ticket_id = ?",
+		[ticketId],
+	);
+	return rows;
 };
 
 export const update = async (id: string, content: string) => {
