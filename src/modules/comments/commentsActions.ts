@@ -36,7 +36,7 @@ export const findByTicketId: RequestHandler = async (req, res, next) => {
 
 export const create: RequestHandler = async (req, res, next) => {
 	try {
-		const { content, author_id, ticket_id } = req.body;
+		const { content, author_id, ticket_id, is_internal } = req.body;
 		if (!content || !content.trim()) {
 			res.sendStatus(400);
 			return;
@@ -45,6 +45,7 @@ export const create: RequestHandler = async (req, res, next) => {
 			content,
 			author_id,
 			ticket_id,
+			is_internal ?? false,
 		);
 		res.status(201).json({
 			id: insertId,
