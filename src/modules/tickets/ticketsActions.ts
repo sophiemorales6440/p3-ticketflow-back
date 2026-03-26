@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import * as ticketHistoryRepository from "../ticketHistory/ticketHistoryRepository.js";
 import * as ticketsRepository from "./ticketsRepository.js";
 
 // GET /api/tickets
@@ -75,6 +76,16 @@ export const update: RequestHandler = async (req, res, next) => {
 			technician_id,
 			category_id,
 		} = req.body;
+
+		const changed_by = req.body.userId; // depuis le middleware d'authentification
+
+		// Récupérer l'ancien ticket pour comparer le statut
+		const oldTicket = await ticketsRepository.findById(String(req.params.id));
+		if (!oldTicket) {
+			res.sendStatus(404);
+			return;
+		}
+
 		const updated = await ticketsRepository.update(
 			String(req.params.id),
 			title,
@@ -89,6 +100,15 @@ export const update: RequestHandler = async (req, res, next) => {
 		if (!updated) {
 			res.sendStatus(404);
 			return;
+		}
+		// Si le statut a changé, créer une entrée dans ticket_history
+		if (oldTicket.status !== status) {
+			await ticketHistoryRepository.create(
+				Number(req.params.id),
+				oldTicket.status,
+				status,
+				changed_by,
+			);
 		}
 
 		res.sendStatus(204);
