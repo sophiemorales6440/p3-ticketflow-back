@@ -3,17 +3,18 @@ import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import * as authRepository from "./authRepository.js";
 
-export const signin: RequestHandler = async (request, response, _next) => {
-	const { id, role, email } = request.body;
+export const signin: RequestHandler = async (request, response, next) => {
+	try {
+		const { id, role, email } = request.body; // vient du middleware checkEmail
+		const secret = process.env.SECRET;
+		if (!secret) throw new Error("SECRET manquant");
 
-	const userDTO = { id, role, email };
-
-	const secret = process.env.SECRET;
-	if (!secret) throw new Error("SECRET manquant");
-
-	const token = jwt.sign({ id, role }, secret, { expiresIn: "2h" });
-
-	response.status(200).json({ userDTO, token });
+		const userDTO = { id, role, email };
+		const token = jwt.sign({ id, role }, secret, { expiresIn: "1h" });
+		response.status(200).json({ userDTO, token });
+	} catch (err) {
+		next(err);
+	}
 };
 
 export const signup: RequestHandler = async (request, response, next) => {

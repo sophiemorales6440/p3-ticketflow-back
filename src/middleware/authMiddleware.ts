@@ -42,7 +42,9 @@ export const checkToken: RequestHandler = async (request, response, next) => {
 		}
 
 		const { id, role } = decoded as { id: number; role: string };
-		(request.body.userId = id), (request.body.userRole = role), next();
+		request.body.userId = id;
+		request.body.userRole = role;
+		next();
 	});
 };
 
