@@ -5,16 +5,15 @@ import {
 	getAll,
 	getAttachmentsByTicketId,
 	getById,
+	getByTechnicianId,
 	update,
 } from "./ticketsActions.js";
 
 const router = Router();
 
 router.get("/", getAll);
-
-// 👉 AJOUT DE LA ROUTE MANQUANTE
+router.get("/technician/:id", getByTechnicianId);
 router.get("/:id/attachments", getAttachmentsByTicketId);
-
 router.get("/:id", getById);
 router.post("/", create);
 router.put("/:id", update);
