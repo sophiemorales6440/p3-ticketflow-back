@@ -27,6 +27,7 @@ export const findByTicketId: RequestHandler = async (req, res, next) => {
 	try {
 		const rows = await commentsRepository.findByTicketId(
 			String(req.params.ticketId),
+			String(req.body.userRole),
 		);
 		res.json(rows);
 	} catch (err) {
