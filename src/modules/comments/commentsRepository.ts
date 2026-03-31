@@ -27,9 +27,16 @@ export const create = async (
 	return result.insertId;
 };
 
-export const findByTicketId = async (ticketId: string) => {
+export const findByTicketId = async (ticketId: string, role: string) => {
+	if (role === "client") {
+		const [rows] = await client.query<RowDataPacket[]>(
+			"SELECT comments.*, users.firstname, users.lastname, users.role FROM comments JOIN users ON comments.author_id = users.id WHERE comments.ticket_id = ? AND comments.is_internal = 0 ORDER BY comments.created_at ASC",
+			[ticketId],
+		);
+		return rows;
+	}
 	const [rows] = await client.query<RowDataPacket[]>(
-		"SELECT * FROM comments WHERE ticket_id = ?",
+		"SELECT comments.*, users.firstname, users.lastname, users.role FROM comments JOIN users ON comments.author_id = users.id WHERE comments.ticket_id = ? ORDER BY comments.created_at ASC",
 		[ticketId],
 	);
 	return rows;
