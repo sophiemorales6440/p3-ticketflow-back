@@ -157,3 +157,15 @@ export const getAttachmentsByTicketId: RequestHandler = async (
 		next(err);
 	}
 };
+
+// GET /api/tickets/technician/:id
+export const getByTechnicianId: RequestHandler = async (req, res, next) => {
+	try {
+		const tickets = await ticketsRepository.findByTechnicianId(
+			String(req.params.id),
+		);
+		res.json(tickets);
+	} catch (err) {
+		next(err);
+	}
+};
