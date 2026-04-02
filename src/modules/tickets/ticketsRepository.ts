@@ -87,3 +87,10 @@ export const findByTechnicianId = async (technician_id: string) => {
 	);
 	return rows;
 };
+export const findByClientId = async (client_id: string) => {
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT tickets.*, categories.name AS category_name FROM tickets LEFT JOIN categories ON tickets.category_id = categories.id WHERE tickets.client_id = ?",
+		[client_id],
+	);
+	return rows;
+};

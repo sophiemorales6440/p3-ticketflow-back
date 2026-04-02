@@ -3,8 +3,23 @@ import * as ticketHistoryRepository from "../ticketHistory/ticketHistoryReposito
 import * as ticketsRepository from "./ticketsRepository.js";
 
 // GET /api/tickets
-export const getAll: RequestHandler = async (_req, res, next) => {
+export const getAll: RequestHandler = async (req, res, next) => {
 	try {
+		const { userId, userRole } = req.body;
+
+		if (userRole === "client") {
+			const rows = await ticketsRepository.findByClientId(String(userId));
+			res.json(rows);
+			return;
+		}
+
+		if (userRole === "technician") {
+			const rows = await ticketsRepository.findByTechnicianId(String(userId));
+			res.json(rows);
+			return;
+		}
+
+		// admin → tous les tickets
 		const rows = await ticketsRepository.findAll();
 		res.json(rows);
 	} catch (err) {
