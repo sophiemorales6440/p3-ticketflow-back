@@ -4,8 +4,8 @@ import {
 	destroy,
 	getAll,
 	getById,
-	update,
 	getTechnicianTickets,
+	update,
 } from "./usersControllers.js";
 
 const router = Router();
