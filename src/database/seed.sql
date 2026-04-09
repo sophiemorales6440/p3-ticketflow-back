@@ -22,6 +22,13 @@ VALUES
 ('Kuider', 'Cook', 'technician', 'kuider@example.com', '$2a$08$BHeiWN3hWXQRonI30NECOOkqSkf3gMohU7UkZlHcS2W1I5dDePOo.'), -- motdepasse
 ('Karim', 'Doer', 'technician', 'karim@example.com', '$2a$08$j2sYeM4lCOTe7c8b7jik4eblmt.mfF/1lXsC2UCPAOW0PNLvIgp12'), -- gitgud
 ('Victor', 'Battlefield', 'client', 'victor@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- getrekt
+('Kevan', 'Golem', 'client', 'kevan@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- pomme
+('Manu', 'Tecktonik', 'client', 'loulou@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- pomme
+('Prescillia', 'Strassfleur', 'client', 'prescillia@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- pomme
+('John', 'Helldivers', 'client', 'jhd@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- pomme
+('Yavuz', 'Kutukutuk', 'client', 'yavuz@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- pomme
+('Yavinci', 'Lou', 'client', 'yavinci@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- pomme
+('Victor', 'La Guerre', 'client', 'victor@example.com', '$2a$08$EGi0CkkPbrWZWfpWMzwhEe3oHAJHpK5wvuVW1VMXY2rvU.vDTJz.u'); -- pomme
 
 INSERT IGNORE INTO categories (name) VALUES
 ('Matériel'),
