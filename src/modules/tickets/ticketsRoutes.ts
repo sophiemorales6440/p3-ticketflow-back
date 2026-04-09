@@ -7,6 +7,7 @@ import {
 	getAttachmentsByTicketId,
 	getById,
 	getByTechnicianId,
+	getStats,
 	update,
 } from "./ticketsActions.js";
 
@@ -15,6 +16,7 @@ const router = Router();
 router.get("/", checkToken, getAll);
 router.get("/technician/:id", checkToken, getByTechnicianId);
 router.get("/:id/attachments", checkToken, getAttachmentsByTicketId);
+router.get("/:id", checkToken, getStats);
 router.get("/:id", checkToken, getById);
 router.post("/", checkToken, create);
 router.put("/:id", checkToken, update);
