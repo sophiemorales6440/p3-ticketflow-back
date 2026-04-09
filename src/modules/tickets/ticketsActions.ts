@@ -184,3 +184,12 @@ export const getByTechnicianId: RequestHandler = async (req, res, next) => {
 		next(err);
 	}
 };
+// GET /api/tickets/stats
+export const getStats: RequestHandler = async (_req, res, next) => {
+	try {
+		const stats = await ticketsRepository.findStats();
+		res.json(stats);
+	} catch (err) {
+		next(err);
+	}
+};
