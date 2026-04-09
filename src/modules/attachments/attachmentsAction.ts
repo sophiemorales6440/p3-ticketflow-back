@@ -1,63 +1,71 @@
 import type { Request, Response } from "express";
 import { findById } from "../tickets/ticketsRepository.js";
 import attachmentsRepository from "./attachmentsRepository.js";
+import multer from "multer";
 
 const create = async (req: Request, res: Response) => {
-	try {
-		const ticketId = Number(req.params.id);
-		const { url, filename } = req.body;
+  try {
+    const ticketId = Number(req.params.id);
+    const filename = req.file.filename;
+    const url = `/uploads/${req.file.filename}`;
 
-		if (!url || !filename) {
-			return res.status(400).json({ error: "Missing url or filename" });
-		}
+    // Vérification : le ticket existe (findById attend un string)
+    const ticket = await findById(String(ticketId));
+    if (!ticket) {
+      return res.status(404).json({ error: "Ticket not found" });
+    }
 
-		// Vérification : le ticket existe (findById attend un string)
-		const ticket = await findById(String(ticketId));
-		if (!ticket) {
-			return res.status(404).json({ error: "Ticket not found" });
-		}
+    const id = await attachmentsRepository.create(url, filename, ticketId);
 
-		const id = await attachmentsRepository.create(url, filename, ticketId);
-
-		return res.status(201).json({ id, url, filename, ticketId });
-	} catch (error) {
-		console.error(error);
-		return res.status(500).json({ error: "Internal server error" });
-	}
+    return res.status(201).json({ id, url, filename, ticketId });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const findByTicketId = async (req: Request, res: Response) => {
-	try {
-		const ticketId = Number(req.params.id);
+  try {
+    const ticketId = Number(req.params.id);
 
-		const attachments = await attachmentsRepository.findByTicketId(ticketId);
+    const attachments = await attachmentsRepository.findByTicketId(ticketId);
 
-		return res.status(200).json(attachments);
-	} catch (error) {
-		console.error(error);
-		return res.status(500).json({ error: "Internal server error" });
-	}
+    return res.status(200).json(attachments);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const destroy = async (req: Request, res: Response) => {
-	try {
-		const id = Number(req.params.id);
+  try {
+    const id = Number(req.params.id);
 
-		const deleted = await attachmentsRepository.destroy(id);
+    const deleted = await attachmentsRepository.destroy(id);
 
-		if (!deleted) {
-			return res.status(404).json({ error: "Attachment not found" });
-		}
+    if (!deleted) {
+      return res.status(404).json({ error: "Attachment not found" });
+    }
 
-		return res.status(200).json({ message: "Attachment deleted" });
-	} catch (error) {
-		console.error(error);
-		return res.status(500).json({ error: "Internal server error" });
-	}
+    return res.status(200).json({ message: "Attachment deleted" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: (request, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
 export default {
-	create,
-	findByTicketId,
-	destroy,
+  create,
+  findByTicketId,
+  destroy,
+  upload,
 };
