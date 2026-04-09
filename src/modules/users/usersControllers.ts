@@ -70,3 +70,18 @@ export const destroy: RequestHandler = async (request, respond, next) => {
 		next(error);
 	}
 };
+
+export const getTechnicianTickets: RequestHandler = async (
+	request,
+	respond,
+	next,
+) => {
+	try {
+		const tickets = await usersRepository.findByTechnicianId(
+			String(request.params.user),
+		);
+		respond.json(tickets);
+	} catch (error) {
+		next(error);
+	}
+};
