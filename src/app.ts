@@ -13,9 +13,12 @@ app.use(
 		],
 	}),
 );
-app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api/attachments")) return next();
+  express.json()(req, res, next);
+});
 
+app.use("/uploads", express.static("uploads"));
 
 // Routes
 app.use(router);
