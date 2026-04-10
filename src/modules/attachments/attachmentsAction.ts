@@ -6,7 +6,7 @@ import attachmentsRepository from "./attachmentsRepository.js";
 const create = async (req: Request, res: Response) => {
 	try {
 		const ticketId = Number(req.params.id);
-		if(!req.file){
+		if (!req.file) {
 			return res.status(400).json({ error: "No file uploaded" });
 		}
 		const filename = req.file.filename;
@@ -59,7 +59,11 @@ const destroy = async (req: Request, res: Response) => {
 
 const storage = multer.diskStorage({
 	destination: "uploads/",
-	filename: (_request: Request, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) => {
+	filename: (
+		_request: Request,
+		file: Express.Multer.File,
+		callback: (error: Error | null, filename: string) => void,
+	) => {
 		callback(null, file.originalname);
 	},
 });
