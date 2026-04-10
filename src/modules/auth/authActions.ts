@@ -21,12 +21,17 @@ export const signin: RequestHandler = async (request, response, next) => {
 
 export const signup: RequestHandler = async (request, response, next) => {
 	try {
-		const { email, password } = request.body;
+		const { email, password, firstname, lastname } = request.body;
 
 		const salt = bcrypt.genSaltSync(8);
 		const passwordHash = bcrypt.hashSync(password, salt);
 
-		const insertId = await authRepository.signup(String(email), passwordHash);
+		const insertId = await authRepository.signup(
+			String(email),
+			passwordHash,
+			String(firstname),
+			String(lastname),
+		);
 		response.status(201).json({ id: insertId, email });
 	} catch (err) {
 		next(err);
