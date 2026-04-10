@@ -9,7 +9,12 @@ export const signin = async (email: string, password: string) => {
 	return rows[0] as RowDataPacket | undefined;
 };
 
-export const signup = async (email: string, password: string, firstName: string, lastName: string) => {
+export const signup = async (
+	email: string,
+	password: string,
+	firstName: string,
+	lastName: string,
+) => {
 	const [result] = await client.query<ResultSetHeader>(
 		"INSERT INTO users (email, password, firstname, lastname) VALUES (?, ?, ?, ?)",
 		[email, password, firstName, lastName],

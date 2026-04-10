@@ -26,7 +26,12 @@ export const signup: RequestHandler = async (request, response, next) => {
 		const salt = bcrypt.genSaltSync(8);
 		const passwordHash = bcrypt.hashSync(password, salt);
 
-		const insertId = await authRepository.signup(String(email), passwordHash, String(firstname), String(lastname));
+		const insertId = await authRepository.signup(
+			String(email),
+			passwordHash,
+			String(firstname),
+			String(lastname),
+		);
 		response.status(201).json({ id: insertId, email });
 	} catch (err) {
 		next(err);
