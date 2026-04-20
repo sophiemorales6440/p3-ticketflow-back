@@ -1,9 +1,10 @@
 module.exports = {
 	testEnvironment: "node",
 	moduleNameMapper: {
-		"^(.*)\\.js$": "$1",
+		"^(\\.{1,2}/.+)\\.js$": "$1",
+		"^multer$": "<rootDir>/src/__mocks__/multer.ts",
 	},
-	testMatch: ["**/src/__tests__/**/*.test.ts"],
+	testMatch: ["**/src/**/__tests__/**/*.test.ts"],
 	transform: {
 		"^.+\\.ts$": [
 			"ts-jest",

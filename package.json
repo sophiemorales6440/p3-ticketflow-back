@@ -16,25 +16,7 @@
 		"db:migrate": "tsx src/database/setup.ts migrate",
 		"db:seed": "tsx src/database/setup.ts seed",
 		"db:setup": "tsx src/database/setup.ts setup",
-		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
-	},
-	"jest": {
-		"preset": "ts-jest",
-		"testEnvironment": "node",
-		"extensionsToTreatAsEsm": [
-			".ts"
-		],
-		"transform": {
-			"^.+\\.tsx?$": [
-				"ts-jest",
-				{
-					"useESM": true
-				}
-			]
-		},
-		"moduleNameMapper": {
-			"^(\\.{1,2}/.*)\\.js$": "$1"
-		}
+		"test": "cross-env jest --config jest.config.cjs"
 	},
 	"dependencies": {
 		"bcrypt": "^6.0.0",
