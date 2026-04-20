@@ -1,9 +1,9 @@
 module.exports = {
 	testEnvironment: "node",
 	moduleNameMapper: {
-		"^(.*)\\.js$": "$1",
+		"^(\\.{1,2}/.+)\\.js$": "$1",
 	},
-	testMatch: ["**/src/__tests__/**/*.test.ts"],
+	testMatch: ["**/src/**/__tests__/**/*.test.ts"],
 	transform: {
 		"^.+\\.ts$": [
 			"ts-jest",

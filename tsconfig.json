@@ -14,8 +14,9 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"isolatedModules": true
+		"isolatedModules": true,
+		"types": ["jest", "node"]
 	},
-	"include": ["src", "src/__tests__", "jest.config.cjs"],
+	"include": ["src"],
 	"exclude": ["node_modules", "dist"]
 }
