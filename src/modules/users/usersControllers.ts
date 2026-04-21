@@ -12,12 +12,21 @@ export const getAll: RequestHandler = async (_request, respond, next) => {
 
 export const getById: RequestHandler = async (request, respond, next) => {
 	try {
-		const users = await usersRepository.findById(String(request.params.user));
-		if (!users) {
+		const { userId, userRole } = request.body;
+		const targetId = String(request.params.user);
+
+		// Un client ne peut voir que son propre profil
+		if (userRole === "client" && String(userId) !== targetId) {
+			respond.sendStatus(403);
+			return;
+		}
+
+		const user = await usersRepository.findById(targetId);
+		if (!user) {
 			respond.sendStatus(404);
 			return;
 		}
-		respond.json(users);
+		respond.json(user);
 	} catch (error) {
 		next(error);
 	}
@@ -40,9 +49,17 @@ export const create: RequestHandler = async (request, respond, next) => {
 
 export const update: RequestHandler = async (request, respond, next) => {
 	try {
-		const { firstname, lastname, email } = request.body;
+		const { userId, userRole, firstname, lastname, email } = request.body;
+		const targetId = String(request.params.user);
+
+		// Un client ne peut modifier que son propre profil
+		if (userRole === "client" && String(userId) !== targetId) {
+			respond.sendStatus(403);
+			return;
+		}
+
 		const updated = await usersRepository.update(
-			String(request.params.user),
+			targetId,
 			firstname,
 			lastname,
 			email,
