@@ -18,7 +18,8 @@ app.use((req, res, next) => {
 	express.json()(req, res, next);
 });
 
-app.use("/uploads", express.static("uploads"));
+// Les uploads ne sont plus servis en statique public
+// Ils passent désormais par une route protégée avec checkToken
 
 // Routes
 app.use(router);
