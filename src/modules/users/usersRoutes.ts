@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { isAdmin } from "../../middleware/authMiddleware.js";
 import {
 	create,
 	destroy,
@@ -10,11 +11,14 @@ import {
 
 const router = Router();
 
-router.get("/", getAll);
+// Admin uniquement
+router.get("/", isAdmin, getAll);
+router.post("/", isAdmin, create);
+router.delete("/:user", isAdmin, destroy);
+
+// Accessible à tous les rôles connectés (contrôle dans le controller)
 router.get("/:user/tickets", getTechnicianTickets);
 router.get("/:user", getById);
-router.post("/", create);
 router.put("/:user", update);
-router.delete("/:user", destroy);
 
 export default router;

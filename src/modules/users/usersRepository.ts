@@ -1,14 +1,19 @@
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import client from "../../database/client.js";
 
+// Ne jamais retourner le mot de passe dans les SELECT
+const USER_SAFE_FIELDS = "id, firstname, lastname, email, role, created_at";
+
 export const findAll = async () => {
-	const [rows] = await client.query<RowDataPacket[]>("SELECT * FROM users");
+	const [rows] = await client.query<RowDataPacket[]>(
+		`SELECT ${USER_SAFE_FIELDS} FROM users`,
+	);
 	return rows;
 };
 
 export const findById = async (id: string) => {
 	const [rows] = await client.query<RowDataPacket[]>(
-		"SELECT * FROM users WHERE id = ?",
+		`SELECT ${USER_SAFE_FIELDS} FROM users WHERE id = ?`,
 		[id],
 	);
 	return rows[0] as RowDataPacket | undefined;
