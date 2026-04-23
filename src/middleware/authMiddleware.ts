@@ -37,10 +37,12 @@ export const checkToken: RequestHandler = async (request, response, next) => {
 	// token verification
 	jwt.verify(token, secret, (error, decoded) => {
 		if (error) {
-			throw new Error("Problem token");
+			response.sendStatus(401);
+			return;
 		}
 
 		const { id, role } = decoded as { id: number; role: string };
+		request.body = request.body || {};
 		request.body.userId = id;
 		request.body.userRole = role;
 		next();

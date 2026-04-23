@@ -1,0 +1,116 @@
+MUSIQUE
+
+Gestion pour ensembles amateurs
+Journal de pratique musiciens
+
+SPORT / OUTDOOR
+3. Conditions/spots multi-discipline
+34. Carnet d'entraînement grimpeurs
+35. Planificateur rando bivouac
+37. Défis outdoor RPG
+38. Gestion ouvreurs escalade
+39. Suivi blessures sportifs
+40. Mise en relation partenaires aventure
+67. Suivi pour apnéistes
+SPORT DE COMBAT
+51. Carnet d'entraînement combat
+52. Gestion clubs de combat
+53. Analyse vidéo coachs
+54. Gestion du cutting
+55. Marketplace sparring partners
+56. Gestion événements combat
+57. Ranking combattants amateurs
+58. Shadow boxing IA
+NATURE / ENVIRONNEMENT
+14. Carnet terrain photo naturaliste
+15. Sciences participatives biodiversité
+17. Suivi faune gestionnaires réserves
+19. Registre carbone outdoor
+28. Quêtes nature gamifiées
+31. Parrainage animaux sauvages
+32. Cartographie atteintes environnementales
+50. Documentation patrimoniale
+64. Coordination cleanwalks
+68. Plateforme bénévoles environnementaux
+82. Cartographie sonore collaborative
+84. Duolingo chants d'oiseaux
+88. Adoption d'arbres avec suivi
+ANIMAUX
+16. Gestion refuges
+59. Gestion éleveurs NAC/reptiles
+65. Gestion pensions canines/félines
+69. Carnet de santé vétérinaire
+70. Mise en relation pet-sitters
+71. Socialisation canine
+72. Gestion éleveurs canins/félins
+73. Nutrition animale personnalisée
+74. Suivi éducation canine
+75. Gestion toiletteurs
+76. Premiers secours animalier
+77. Garde partagée entre voisins
+78. Suivi animaux chroniques
+79. Marketplace services animaliers
+80. Suivi GPS intelligent
+AGRICULTURE / TERROIR
+4. Carnet de vigne petits domaines
+7. Suivi de ruches apiculteurs
+18. Gestion éco-pâturage
+33. Gestion fermes pédagogiques
+41. Gestion micro-brasseries
+61. Gestion forêts privées
+ALIMENTATION / NUTRITION
+10. Conformité HACCP petits restos
+49. Anti-gaspillage foyers
+62. Gestion food trucks
+91. Nutrition combat/pesée
+92. Multi-intolérances familial
+93. Nutrition cycle menstruel
+94. Carnet alimentaire chroniques
+95. Nutrition seniors/aidants
+96. Batch cooking intelligent
+97. Nutrition trek
+98. Traçabilité petits producteurs
+99. Cantines scolaires EGalim
+100. Reconnexion saisonnière locale
+GAMING
+20. Planification builds factory games
+21. Tracker runs roguelikes
+22. Tournois asynchrones stratégie
+23. Guides interactifs jeux complexes
+24. Backlog gaming intelligent
+25. Gestion communauté serveurs
+26. Création scénarios custom
+ÉDUCATION / APPRENTISSAGE
+27. Éducation environnementale gamifiée
+29. Moteur cours soulslike (plateforme)
+IMMOBILIER / HABITAT
+6. Syndics bénévoles copropriété
+12. Gestion petits loueurs saisonniers
+13. Suivi chantier particuliers
+VIE QUOTIDIENNE / SERVICES
+5. Dashboard intérimaires
+8. Gestion associations loi 1901
+9. Carnet véhicules collection
+11. Stock artisans créateurs
+43. Troc de compétences
+44. Événements micro-communautés
+45. Diagnostic vanlifers
+46. Veille parcellaire terrain rural
+47. Journaling reconversion pro
+48. Gestion gardiens refuge montagne
+63. Suivi collections
+RSE / ENTREPRISE
+30. Impact écologique petits commerces
+85. Bénévolat d'entreprise
+NUMÉRIQUE / PATRIMOINE PERSONNEL
+42. Transmission patrimoine numérique
+86. Mémoire familiale interactive
+87. Gestion auteurs autoédités
+FUNÉRAIRE / COLLECTIVITÉS
+83. Gestion cimetières communaux
+89. Planification funéraire anticipée
+TOURISME
+36. Plateforme urbex
+66. Rando thématique patrimoine
+81. Gestion lieux de retraite/silence
+90. Micro-aventures IA quotidiennes

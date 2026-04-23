@@ -1,9 +1,25 @@
 import type { RequestHandler } from "express";
+import { getIO } from "../../socket.js";
+import * as ticketHistoryRepository from "../ticketHistory/ticketHistoryRepository.js";
 import * as ticketsRepository from "./ticketsRepository.js";
 
 // GET /api/tickets
-export const getAll: RequestHandler = async (_req, res, next) => {
+export const getAll: RequestHandler = async (req, res, next) => {
 	try {
+		const { userId, userRole } = req.body;
+
+		if (userRole === "client") {
+			const rows = await ticketsRepository.findByClientId(String(userId));
+			res.json(rows);
+			return;
+		}
+
+		if (userRole === "technician") {
+			const rows = await ticketsRepository.findByTechnicianId(String(userId));
+			res.json(rows);
+			return;
+		}
+
 		const rows = await ticketsRepository.findAll();
 		res.json(rows);
 	} catch (err) {
@@ -15,12 +31,10 @@ export const getAll: RequestHandler = async (_req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
 	try {
 		const ticket = await ticketsRepository.findById(String(req.params.id));
-
 		if (!ticket) {
 			res.sendStatus(404);
 			return;
 		}
-
 		res.json(ticket);
 	} catch (err) {
 		next(err);
@@ -39,6 +53,7 @@ export const create: RequestHandler = async (req, res, next) => {
 			technician_id,
 			category_id,
 		} = req.body;
+
 		const insertId = await ticketsRepository.create(
 			title,
 			description,
@@ -48,7 +63,8 @@ export const create: RequestHandler = async (req, res, next) => {
 			technician_id,
 			category_id,
 		);
-		res.status(201).json({
+
+		const newTicket = {
 			id: insertId,
 			title,
 			description,
@@ -57,7 +73,12 @@ export const create: RequestHandler = async (req, res, next) => {
 			client_id,
 			technician_id,
 			category_id,
-		});
+		};
+
+		// Notifier admin et techniciens qu'un nouveau ticket a été créé
+		getIO().to("staff").emit("new_ticket", newTicket);
+
+		res.status(201).json(newTicket);
 	} catch (err) {
 		next(err);
 	}
@@ -75,6 +96,14 @@ export const update: RequestHandler = async (req, res, next) => {
 			technician_id,
 			category_id,
 		} = req.body;
+		const changed_by = req.body.userId;
+
+		const oldTicket = await ticketsRepository.findById(String(req.params.id));
+		if (!oldTicket) {
+			res.sendStatus(404);
+			return;
+		}
+
 		const updated = await ticketsRepository.update(
 			String(req.params.id),
 			title,
@@ -91,6 +120,26 @@ export const update: RequestHandler = async (req, res, next) => {
 			return;
 		}
 
+		// Si le statut a changé : historique + notif au client
+		if (oldTicket.status !== status) {
+			await ticketHistoryRepository.create(
+				Number(req.params.id),
+				oldTicket.status,
+				status,
+				changed_by,
+			);
+
+			// Notifier le client propriétaire du ticket
+			getIO()
+				.to(`user:${client_id}`)
+				.emit("ticket_status_changed", {
+					ticketId: Number(req.params.id),
+					ticketTitle: oldTicket.title,
+					oldStatus: oldTicket.status,
+					newStatus: status,
+				});
+		}
+
 		res.sendStatus(204);
 	} catch (err) {
 		next(err);
@@ -101,17 +150,16 @@ export const update: RequestHandler = async (req, res, next) => {
 export const destroy: RequestHandler = async (req, res, next) => {
 	try {
 		const deleted = await ticketsRepository.destroy(String(req.params.id));
-
 		if (!deleted) {
 			res.sendStatus(404);
 			return;
 		}
-
 		res.sendStatus(204);
 	} catch (err) {
 		next(err);
 	}
 };
+
 // GET /api/tickets/:id/attachments
 export const getAttachmentsByTicketId: RequestHandler = async (
 	req,
@@ -120,19 +168,36 @@ export const getAttachmentsByTicketId: RequestHandler = async (
 ) => {
 	try {
 		const ticketId = String(req.params.id);
-
-		// Vérifier que le ticket existe
 		const ticket = await ticketsRepository.findById(ticketId);
 		if (!ticket) {
 			res.status(404).json({ message: "Ticket introuvable" });
 			return;
 		}
-
-		// Récupérer les attachments
 		const attachments =
 			await ticketsRepository.findAttachmentsByTicketId(ticketId);
-
 		res.json(attachments);
+	} catch (err) {
+		next(err);
+	}
+};
+
+// GET /api/tickets/technician/:id
+export const getByTechnicianId: RequestHandler = async (req, res, next) => {
+	try {
+		const tickets = await ticketsRepository.findByTechnicianId(
+			String(req.params.id),
+		);
+		res.json(tickets);
+	} catch (err) {
+		next(err);
+	}
+};
+
+// GET /api/tickets/stats
+export const getStats: RequestHandler = async (_req, res, next) => {
+	try {
+		const stats = await ticketsRepository.findStats();
+		res.json(stats);
 	} catch (err) {
 		next(err);
 	}

@@ -5,6 +5,13 @@ import mysql from "mysql2/promise";
 
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
 
+if (DB_HOST !== "localhost") {
+	console.error(
+		"❌ Impossible de lancer db:setup/seed/migrate sur une BDD distante ! Utilisez localhost uniquement.",
+	);
+	process.exit(1);
+}
+
 const action = process.argv[2];
 
 const runSqlFile = async (connection: mysql.Connection, filename: string) => {

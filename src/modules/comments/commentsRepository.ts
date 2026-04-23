@@ -18,12 +18,28 @@ export const create = async (
 	content: string,
 	author_id: number,
 	ticket_id: number,
+	is_internal: boolean,
 ) => {
 	const [result] = await client.query<ResultSetHeader>(
-		"INSERT INTO comments (content, author_id, ticket_id) VALUES (?, ?, ?)",
-		[content, author_id, ticket_id],
+		"INSERT INTO comments (content, author_id, ticket_id, is_internal) VALUES (?, ?, ?, ?)",
+		[content, author_id, ticket_id, is_internal],
 	);
 	return result.insertId;
+};
+
+export const findByTicketId = async (ticketId: string, role: string) => {
+	if (role === "client") {
+		const [rows] = await client.query<RowDataPacket[]>(
+			"SELECT comments.*, users.firstname, users.lastname, users.role FROM comments JOIN users ON comments.author_id = users.id WHERE comments.ticket_id = ? AND comments.is_internal = 0 ORDER BY comments.created_at ASC",
+			[ticketId],
+		);
+		return rows;
+	}
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT comments.*, users.firstname, users.lastname, users.role FROM comments JOIN users ON comments.author_id = users.id WHERE comments.ticket_id = ? ORDER BY comments.created_at ASC",
+		[ticketId],
+	);
+	return rows;
 };
 
 export const update = async (id: string, content: string) => {

@@ -15,24 +15,36 @@
 		"prepare": "husky",
 		"db:migrate": "tsx src/database/setup.ts migrate",
 		"db:seed": "tsx src/database/setup.ts seed",
-		"db:setup": "tsx src/database/setup.ts setup"
+		"db:setup": "tsx src/database/setup.ts setup",
+		"test": "cross-env jest --config jest.config.cjs"
 	},
 	"dependencies": {
 		"bcrypt": "^6.0.0",
-		"cors": "^2.8.5",
+		"cors": "^2.8.6",
 		"dotenv": "^16.4.7",
 		"express": "^4.21.2",
+		"express-rate-limit": "^8.3.2",
+		"helmet": "^8.1.0",
 		"jsonwebtoken": "^9.0.3",
-		"mysql2": "^3.12.0"
+		"multer": "^2.1.1",
+		"mysql2": "^3.12.0",
+		"socket.io": "^4.8.3"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.11",
 		"@types/bcrypt": "^6.0.0",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.0",
+		"@types/jest": "^30.0.0",
 		"@types/jsonwebtoken": "^9.0.10",
+		"@types/multer": "^2.1.0",
 		"@types/node": "^22.13.0",
+		"@types/supertest": "^7.2.0",
+		"cross-env": "^10.1.0",
 		"husky": "^9.1.7",
+		"jest": "^30.3.0",
+		"supertest": "^7.2.2",
+		"ts-jest": "^29.4.6",
 		"tsx": "^4.19.0",
 		"typescript": "^5.7.0"
 	}

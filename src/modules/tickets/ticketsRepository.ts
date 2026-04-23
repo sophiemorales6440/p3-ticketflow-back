@@ -80,3 +80,32 @@ export const findAttachmentsByTicketId = async (ticketId: string) => {
 	);
 	return rows;
 };
+export const findByTechnicianId = async (technician_id: string) => {
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT tickets.*, categories.name AS category_name FROM tickets LEFT JOIN categories ON tickets.category_id = categories.id WHERE tickets.technician_id = ?",
+		[technician_id],
+	);
+	return rows;
+};
+export const findByClientId = async (client_id: string) => {
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT tickets.*, categories.name AS category_name FROM tickets LEFT JOIN categories ON tickets.category_id = categories.id WHERE tickets.client_id = ?",
+		[client_id],
+	);
+	return rows;
+};
+export const findStats = async () => {
+	const [byStatus] = await client.query<RowDataPacket[]>(
+		"SELECT status, COUNT(*) AS count FROM tickets GROUP BY status",
+	);
+	const [byPriority] = await client.query<RowDataPacket[]>(
+		"SELECT priority, COUNT(*) AS count FROM tickets GROUP BY priority",
+	);
+	const [createdByMonth] = await client.query<RowDataPacket[]>(
+		"SELECT DATE_FORMAT(created_at, '%Y-%m') AS month, COUNT(*) AS count FROM tickets WHERE created_at >= DATE_SUB(NOW(), INTERVAL 12 MONTH) GROUP BY month ORDER BY month",
+	);
+	const [resolvedByMonth] = await client.query<RowDataPacket[]>(
+		"SELECT DATE_FORMAT(resolved_at, '%Y-%m') AS month, COUNT(*) AS count FROM tickets WHERE resolved_at IS NOT NULL AND resolved_at >= DATE_SUB(NOW(), INTERVAL 12 MONTH) GROUP BY month ORDER BY month ASC",
+	);
+	return { byStatus, byPriority, createdByMonth, resolvedByMonth };
+};
