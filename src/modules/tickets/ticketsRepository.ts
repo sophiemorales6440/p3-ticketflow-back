@@ -51,7 +51,7 @@ export const update = async (
 	category_id: number | null,
 ) => {
 	const [result] = await client.query<ResultSetHeader>(
-		"UPDATE tickets SET title = ?, description = ?, status = ?, priority = ?, client_id = ?, technician_id = ?, category_id = ? WHERE id = ?",
+		"UPDATE tickets SET title = ?, description = ?, status = ?, priority = ?, client_id = ?, technician_id = ?, category_id = ?,resolved_at = CASE WHEN ? = 'resolved' THEN NOW() ELSE resolved_at END WHERE id = ?",
 		[
 			title,
 			description,
@@ -60,6 +60,7 @@ export const update = async (
 			client_id,
 			technician_id,
 			category_id,
+			status,
 			id,
 		],
 	);
